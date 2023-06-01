@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 dotenv.config();
 
-const PORT = 3001 || process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(colors.blue(`APP IS LISTENING ON PORT ${PORT}`));
