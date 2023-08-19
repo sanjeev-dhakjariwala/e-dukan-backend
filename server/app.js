@@ -10,8 +10,9 @@ import orderRoutes from "../routes/orderRoutes.js";
 import uploadRoutes from "../routes/uploadRoutes.js";
 import { notFound, errorHandler } from "../middleware/errorMiddleware.js";
 import cors from "cors";
+import {createProxyMiddleware} from 'http-proxy-middleware'
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 connectDB();
 
@@ -22,6 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: `http://localhost:${PORT}`,
+    changeOrigin: true,
+  })
+);
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
